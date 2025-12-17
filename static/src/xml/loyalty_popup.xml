@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <!-- Loyalty Reward Selection Popup -->
+    <t t-name="pos_customer_rewards.LoyaltyPopup">
+        <div class="popup loyalty-popup">
+            <header class="modal-header">
+                <h4 class="modal-title">
+                    <i class="fa fa-gift"></i>
+                    <t t-esc="title"/>
+                </h4>
+            </header>
+
+            <main class="modal-body">
+                <div class="loyalty-info">
+                    <p class="text-center">
+                        <strong>Available Points:</strong>
+                        <span class="badge badge-primary badge-lg">
+                            <t t-esc="customerPoints"/> points
+                        </span>
+                    </p>
+                </div>
+
+                <div class="rewards-list">
+                    <h5>Select a Reward:</h5>
+                    <t t-foreach="rewards" t-as="reward" t-key="reward.id">
+                        <div t-att-class="{
+                                'reward-item': true,
+                                'selected': isSelected(reward)
+                             }"
+                             t-on-click="() => selectReward(reward)">
+                            <div class="reward-info">
+                                <h6 class="reward-name">
+                                    <t t-esc="reward.name"/>
+                                </h6>
+                                <div class="reward-details">
+                                    <span class="reward-points">
+                                        <i class="fa fa-star"></i>
+                                        <t t-esc="reward.points_required"/> points
+                                    </span>
+                                    <span class="reward-value">
+                                        <i t-if="reward.reward_type === 'free_product'" class="fa fa-gift"></i>
+                                        <i t-else="" class="fa fa-tag"></i>
+                                        <t t-esc="getRewardDescription(reward)"/>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="reward-select">
+                                <i t-if="isSelected(reward)" class="fa fa-check-circle text-success"></i>
+                                <i t-else="" class="fa fa-circle-o"></i>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </main>
+
+            <footer class="modal-footer">
+                <button class="btn btn-secondary" t-on-click="cancel">
+                    Cancel
+                </button>
+                <button class="btn btn-primary" t-on-click="confirm">
+                    Redeem
+                </button>
+            </footer>
+        </div>
+    </t>
+
+</templates>

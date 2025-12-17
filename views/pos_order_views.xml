@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Extend POS Order Form View with Loyalty Fields -->
+    <record id="pos_order_view_form_loyalty" model="ir.ui.view">
+        <field name="name">pos.order.form.loyalty</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='order_total']" position="after">
+                <group string="Loyalty" name="loyalty_info"
+                       invisible="not loyalty_points_earned and not loyalty_points_redeemed">
+                    <field name="loyalty_points_earned"/>
+                    <field name="loyalty_points_redeemed"/>
+                    <field name="loyalty_reward_id"/>
+                    <field name="loyalty_discount"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Extend POS Order Tree View with Loyalty Columns -->
+    <record id="pos_order_view_tree_loyalty" model="ir.ui.view">
+        <field name="name">pos.order.tree.loyalty</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='amount_total']" position="after">
+                <field name="loyalty_points_earned" optional="show"/>
+                <field name="loyalty_points_redeemed" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

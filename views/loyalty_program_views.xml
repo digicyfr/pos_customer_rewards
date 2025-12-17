@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Loyalty Program Form View -->
+    <record id="loyalty_program_view_form" model="ir.ui.view">
+        <field name="name">loyalty.program.form</field>
+        <field name="model">loyalty.program</field>
+        <field name="arch" type="xml">
+            <form string="Loyalty Program">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_rewards"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-gift">
+                            <field name="reward_count" widget="statinfo" string="Rewards"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. Customer Rewards"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Earning Configuration">
+                            <field name="points_per_currency"/>
+                            <field name="minimum_order_amount"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                        <group string="Settings">
+                            <field name="point_expiration_days"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Rewards" name="rewards">
+                            <field name="reward_ids">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                    <field name="points_required"/>
+                                    <field name="reward_type"/>
+                                    <field name="discount_amount" invisible="reward_type != 'discount_fixed'"/>
+                                    <field name="discount_percentage" invisible="reward_type != 'discount_percent'"/>
+                                    <field name="active"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Help" name="help">
+                            <div class="alert alert-info" role="alert">
+                                <h4>How Points Work</h4>
+                                <ul>
+                                    <li><strong>Earning:</strong> Customers earn <field name="points_per_currency" class="oe_inline"/> point(s) for each currency unit spent.</li>
+                                    <li><strong>Minimum Order:</strong> Orders must be at least <field name="minimum_order_amount" class="oe_inline" widget="monetary" options="{'currency_field': 'currency_id'}"/> to earn points.</li>
+                                    <li><strong>Expiration:</strong>
+                                        <span invisible="point_expiration_days == 0">Points expire after <field name="point_expiration_days" class="oe_inline"/> days.</span>
+                                        <span invisible="point_expiration_days != 0">Points never expire.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Loyalty Program Tree View -->
+    <record id="loyalty_program_view_tree" model="ir.ui.view">
+        <field name="name">loyalty.program.tree</field>
+        <field name="model">loyalty.program</field>
+        <field name="arch" type="xml">
+            <tree string="Loyalty Programs">
+                <field name="name"/>
+                <field name="points_per_currency"/>
+                <field name="minimum_order_amount"/>
+                <field name="point_expiration_days"/>
+                <field name="reward_count"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="active" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Loyalty Program Search View -->
+    <record id="loyalty_program_view_search" model="ir.ui.view">
+        <field name="name">loyalty.program.search</field>
+        <field name="model">loyalty.program</field>
+        <field name="arch" type="xml">
+            <search string="Search Loyalty Programs">
+                <field name="name"/>
+                <field name="company_id"/>
+                <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                <filter string="Archived" name="archived" domain="[('active', '=', False)]"/>
+                <separator/>
+                <filter string="Has Expiration" name="has_expiration" domain="[('point_expiration_days', '>', 0)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Company" name="group_company" context="{'group_by': 'company_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Loyalty Program Action -->
+    <record id="loyalty_program_action" model="ir.actions.act_window">
+        <field name="name">Loyalty Programs</field>
+        <field name="res_model">loyalty.program</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="loyalty_program_view_search"/>
+        <field name="context">{'search_default_active': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first loyalty program
+            </p>
+            <p>
+                Configure how customers earn and redeem loyalty points in your Point of Sale.
+            </p>
+        </field>
+    </record>
+
+</odoo>

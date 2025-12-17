@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_customer_rewards.PartnerLine"
+       t-inherit="point_of_sale.PartnerLine"
+       t-inherit-mode="extension">
+        <xpath expr="//td[1]" position="after">
+            <td t-if="loyaltyPoints !== null" class="partner-line-loyalty">
+                <span class="badge bg-primary">
+                    <i class="fa fa-star me-1"></i>
+                    <t t-esc="loyaltyPoints"/> pts
+                </span>
+            </td>
+        </xpath>
+    </t>
+
+</templates>

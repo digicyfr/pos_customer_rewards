@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Loyalty Reward Form View -->
+    <record id="loyalty_reward_view_form" model="ir.ui.view">
+        <field name="name">loyalty.reward.form</field>
+        <field name="model">loyalty.reward</field>
+        <field name="arch" type="xml">
+            <form string="Loyalty Reward">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. $5 Discount"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Redemption">
+                            <field name="points_required"/>
+                            <field name="program_id"/>
+                        </group>
+                        <group string="Reward Configuration">
+                            <field name="reward_type"/>
+                            <field name="discount_amount"
+                                   invisible="reward_type != 'discount_fixed'"
+                                   required="reward_type == 'discount_fixed'"/>
+                            <field name="discount_percentage"
+                                   invisible="reward_type != 'discount_percent'"
+                                   required="reward_type == 'discount_percent'"/>
+                            <field name="product_id"
+                                   invisible="reward_type != 'free_product'"
+                                   required="reward_type == 'free_product'"
+                                   options="{'no_create': True, 'no_create_edit': True}"/>
+                            <field name="product_list_price"
+                                   invisible="reward_type != 'free_product'"
+                                   widget="monetary"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="active"/>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Loyalty Reward Tree View -->
+    <record id="loyalty_reward_view_tree" model="ir.ui.view">
+        <field name="name">loyalty.reward.tree</field>
+        <field name="model">loyalty.reward</field>
+        <field name="arch" type="xml">
+            <tree string="Loyalty Rewards">
+                <field name="name"/>
+                <field name="points_required"/>
+                <field name="reward_type"/>
+                <field name="discount_amount" optional="show"/>
+                <field name="discount_percentage" optional="show"/>
+                <field name="product_id" optional="show"/>
+                <field name="program_id"/>
+                <field name="active" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Loyalty Reward Search View -->
+    <record id="loyalty_reward_view_search" model="ir.ui.view">
+        <field name="name">loyalty.reward.search</field>
+        <field name="model">loyalty.reward</field>
+        <field name="arch" type="xml">
+            <search string="Search Rewards">
+                <field name="name"/>
+                <field name="program_id"/>
+                <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                <filter string="Archived" name="archived" domain="[('active', '=', False)]"/>
+                <separator/>
+                <filter string="Fixed Discount" name="discount_fixed" domain="[('reward_type', '=', 'discount_fixed')]"/>
+                <filter string="Percentage Discount" name="discount_percent" domain="[('reward_type', '=', 'discount_percent')]"/>
+                <filter string="Free Product" name="free_product" domain="[('reward_type', '=', 'free_product')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Program" name="group_program" context="{'group_by': 'program_id'}"/>
+                    <filter string="Type" name="group_type" context="{'group_by': 'reward_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Loyalty Reward Action -->
+    <record id="loyalty_reward_action" model="ir.actions.act_window">
+        <field name="name">Loyalty Rewards</field>
+        <field name="res_model">loyalty.reward</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="loyalty_reward_view_search"/>
+        <field name="context">{'search_default_active': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first loyalty reward
+            </p>
+            <p>
+                Define rewards that customers can redeem with their loyalty points.
+            </p>
+        </field>
+    </record>
+
+</odoo>

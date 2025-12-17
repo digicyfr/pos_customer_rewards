@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Redeem Points Wizard Form -->
+    <record id="redeem_points_wizard_form" model="ir.ui.view">
+        <field name="name">redeem.points.wizard.form</field>
+        <field name="model">redeem.points.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Redeem Loyalty Points">
+                <group>
+                    <group>
+                        <field name="partner_id"/>
+                        <field name="current_points"/>
+                        <field name="program_id"/>
+                    </group>
+                    <group>
+                        <field name="reward_id"/>
+                        <field name="points_required"/>
+                        <field name="discount_amount"/>
+                    </group>
+                </group>
+                <group>
+                    <field name="notes"/>
+                </group>
+                <footer>
+                    <button name="action_redeem" string="Redeem" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Redeem Points Action (for POS use only) -->
+    <record id="action_redeem_points_wizard" model="ir.actions.act_window">
+        <field name="name">Redeem Points</field>
+        <field name="res_model">redeem.points.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

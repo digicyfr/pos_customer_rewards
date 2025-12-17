@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POS Customer Rewards</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 600;
+        }
+        .header p {
+            margin: 10px 0 0;
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        .badges {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            margin: 0 5px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+        .badge-beta {
+            background-color: #ffc107;
+            color: #000;
+        }
+        .badge-license {
+            background-color: #007bff;
+            color: white;
+        }
+        .badge-version {
+            background-color: #28a745;
+            color: white;
+        }
+        .section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        .section h3 {
+            color: #764ba2;
+            margin-top: 20px;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .feature-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+        }
+        .feature-card h4 {
+            margin-top: 0;
+            color: #667eea;
+        }
+        .feature-card p {
+            margin: 10px 0 0;
+            color: #666;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin: 8px 0;
+        }
+        .highlight {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .code-block {
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        .steps {
+            counter-reset: step-counter;
+            list-style: none;
+            padding-left: 0;
+        }
+        .steps li {
+            counter-increment: step-counter;
+            margin-bottom: 15px;
+            padding-left: 40px;
+            position: relative;
+        }
+        .steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>POS Customer Rewards</h1>
+        <p>Simple and Powerful Loyalty Program for Point of Sale</p>
+    </div>
+
+    <div class="badges">
+        <span class="badge badge-version">Version 17.0.1.2.0</span>
+        <span class="badge badge-beta">Beta</span>
+        <span class="badge badge-license">License: LGPL-3</span>
+    </div>
+
+    <div class="section">
+        <h2>Overview</h2>
+        <p>A simple, focused loyalty program module for Odoo Point of Sale that helps you reward your customers and build lasting relationships. This module provides all the essential features you need to run an effective loyalty program without overwhelming complexity.</p>
+    </div>
+
+    <div class="section">
+        <h2>Key Features</h2>
+        <div class="features">
+            <div class="feature-card">
+                <h4>Points Earning</h4>
+                <p>Customers automatically earn points based on their purchase amount with configurable earning rates.</p>
+            </div>
+            <div class="feature-card">
+                <h4>Flexible Rewards</h4>
+                <p>Create multiple reward types: fixed discounts, percentage discounts, or free products.</p>
+            </div>
+            <div class="feature-card">
+                <h4>Points Balance Display</h4>
+                <p>View customer points balance directly in the POS customer screen for easy access.</p>
+            </div>
+            <div class="feature-card">
+                <h4>Transaction History</h4>
+                <p>Complete audit trail of all point earn, redeem, and expiration transactions.</p>
+            </div>
+            <div class="feature-card">
+                <h4>Point Expiration</h4>
+                <p>Configure points to expire after a set number of days to encourage repeat visits.</p>
+            </div>
+            <div class="feature-card">
+                <h4>Minimum Order Amount</h4>
+                <p>Set a minimum purchase requirement for earning points to control program costs.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Configuration</h2>
+
+        <h3>Setting Up Your Loyalty Program</h3>
+        <ol class="steps">
+            <li>Go to <strong>Point of Sale &gt; Configuration &gt; Loyalty Programs</strong></li>
+            <li>Click <strong>Create</strong> to set up a new program</li>
+            <li>Configure the program parameters:
+                <ul>
+                    <li><strong>Program Name</strong>: Give your program a descriptive name</li>
+                    <li><strong>Points per Currency Unit</strong>: Set the earning rate (e.g., 1.0 = 1 point per $1)</li>
+                    <li><strong>Minimum Order Amount</strong>: Set minimum purchase to earn points (0 = no minimum)</li>
+                    <li><strong>Points Expire After</strong>: Days until points expire (0 = never expire)</li>
+                </ul>
+            </li>
+            <li>Save your loyalty program</li>
+        </ol>
+
+        <h3>Creating Rewards</h3>
+        <ol class="steps">
+            <li>From the Loyalty Program form, click the <strong>Rewards</strong> smart button</li>
+            <li>Click <strong>Create</strong> to add a new reward</li>
+            <li>Configure the reward:
+                <ul>
+                    <li><strong>Reward Name</strong>: Customer-facing name (e.g., "$5 Off")</li>
+                    <li><strong>Points Required</strong>: Points needed to redeem</li>
+                    <li><strong>Reward Type</strong>: Choose Fixed Discount, Percentage Discount, or Free Product</li>
+                    <li>Set the appropriate discount amount or free product</li>
+                </ul>
+            </li>
+            <li>Create multiple rewards to give customers options</li>
+        </ol>
+
+        <h3>Enabling in POS</h3>
+        <ol class="steps">
+            <li>Navigate to <strong>Point of Sale &gt; Configuration &gt; Point of Sale</strong></li>
+            <li>Select your POS configuration</li>
+            <li>In the <strong>Loyalty</strong> section, select your Loyalty Program</li>
+            <li>Save and restart your POS session</li>
+        </ol>
+    </div>
+
+    <div class="section">
+        <h2>Usage</h2>
+
+        <h3>Earning Points</h3>
+        <ol>
+            <li>Open POS and select a customer</li>
+            <li>Add products to the order</li>
+            <li>Complete the payment</li>
+            <li>Points are automatically awarded based on purchase amount</li>
+            <li>Customer's points balance updates in real-time</li>
+        </ol>
+
+        <h3>Redeeming Points</h3>
+        <ol>
+            <li>Open POS and select a customer with loyalty points</li>
+            <li>Add products to the order</li>
+            <li>Click the <strong>Use Points</strong> button on the product screen</li>
+            <li>A popup displays available rewards and current points balance</li>
+            <li>Select a reward and click <strong>Redeem</strong></li>
+            <li>The discount or free product is applied to the order</li>
+            <li>Complete payment - points are automatically deducted</li>
+        </ol>
+
+        <div class="highlight">
+            <strong>Important:</strong> Only ONE reward can be redeemed per order
+        </div>
+
+        <h3>Viewing Points Balance</h3>
+        <ul>
+            <li><strong>In POS:</strong> Points displayed next to customer name in customer list</li>
+            <li><strong>Backend:</strong> View loyalty points field and transaction history from customer form</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Benefits</h2>
+        <ul>
+            <li><strong>Increase Customer Loyalty:</strong> Reward repeat customers and encourage return visits</li>
+            <li><strong>Boost Sales:</strong> Incentivize larger purchases with minimum order requirements</li>
+            <li><strong>Simple Management:</strong> Automatic discount product creation and management</li>
+            <li><strong>Complete Tracking:</strong> Immutable audit trail of all transactions</li>
+            <li><strong>Flexible Rewards:</strong> Multiple reward types to suit different business needs</li>
+            <li><strong>Easy Integration:</strong> Seamlessly works with existing POS workflow</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Technical Details</h2>
+        <ul>
+            <li><strong>Version:</strong> 17.0.1.2.0</li>
+            <li><strong>Compatible with:</strong> Odoo 17.0</li>
+            <li><strong>License:</strong> LGPL-3</li>
+            <li><strong>Category:</strong> Point of Sale</li>
+            <li><strong>Dependencies:</strong> point_of_sale, base</li>
+            <li><strong>Auto Install:</strong> No</li>
+        </ul>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 Digicyfr Polska | Licensed under LGPL-3</p>
+        <p>
+            <strong>Website:</strong> <a href="https://digicyfr.com">digicyfr.com</a> |
+            <strong>Email:</strong> <a href="mailto:info@digicyfr.com">info@digicyfr.com</a> |
+            <strong>Phone:</strong> +48 695 021 633
+        </p>
+    </div>
+</body>
+</html>

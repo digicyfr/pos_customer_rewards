@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Loyalty Transaction Form View (Read-only) -->
+    <record id="loyalty_transaction_view_form" model="ir.ui.view">
+        <field name="name">loyalty.transaction.form</field>
+        <field name="model">loyalty.transaction</field>
+        <field name="arch" type="xml">
+            <form string="Loyalty Transaction" create="false" edit="false" delete="false">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="description"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Transaction Details">
+                            <field name="date"/>
+                            <field name="transaction_type"/>
+                            <field name="points"/>
+                            <field name="balance_after"/>
+                        </group>
+                        <group string="References">
+                            <field name="partner_id"/>
+                            <field name="program_id"/>
+                            <field name="pos_order_id"/>
+                            <field name="reward_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="notes"/>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Loyalty Transaction Tree View -->
+    <record id="loyalty_transaction_view_tree" model="ir.ui.view">
+        <field name="name">loyalty.transaction.tree</field>
+        <field name="model">loyalty.transaction</field>
+        <field name="arch" type="xml">
+            <tree string="Loyalty Transactions" create="false" edit="false" delete="false" decoration-success="transaction_type == 'earn'" decoration-danger="transaction_type in ('redeem', 'expire')">
+                <field name="date"/>
+                <field name="partner_id"/>
+                <field name="description"/>
+                <field name="transaction_type" optional="show"/>
+                <field name="points"/>
+                <field name="balance_after"/>
+                <field name="pos_order_id" optional="show"/>
+                <field name="reward_id" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Loyalty Transaction Search View -->
+    <record id="loyalty_transaction_view_search" model="ir.ui.view">
+        <field name="name">loyalty.transaction.search</field>
+        <field name="model">loyalty.transaction</field>
+        <field name="arch" type="xml">
+            <search string="Search Transactions">
+                <field name="partner_id"/>
+                <field name="pos_order_id"/>
+                <field name="reward_id"/>
+                <separator/>
+                <filter string="Earned" name="earned" domain="[('transaction_type', '=', 'earn')]"/>
+                <filter string="Redeemed" name="redeemed" domain="[('transaction_type', '=', 'redeem')]"/>
+                <filter string="Expired" name="expired" domain="[('transaction_type', '=', 'expire')]"/>
+                <separator/>
+                <filter string="Today" name="today" domain="[('date', '>=', time.strftime('%%Y-%%m-%%d 00:00:00'))]"/>
+                <filter string="This Week" name="this_week" domain="[('date', '>=', (context_today() - relativedelta(weeks=1)).strftime('%%Y-%%m-%%d'))]"/>
+                <filter string="This Month" name="this_month" domain="[('date', '>=', time.strftime('%%Y-%%m-01'))]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Customer" name="group_partner" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Type" name="group_type" context="{'group_by': 'transaction_type'}"/>
+                    <filter string="Date" name="group_date" context="{'group_by': 'date:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Loyalty Transaction Graph View -->
+    <record id="loyalty_transaction_view_graph" model="ir.ui.view">
+        <field name="name">loyalty.transaction.graph</field>
+        <field name="model">loyalty.transaction</field>
+        <field name="arch" type="xml">
+            <graph string="Loyalty Transactions" type="bar" stacked="True">
+                <field name="date" interval="day"/>
+                <field name="points" type="measure"/>
+                <field name="transaction_type" type="col"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Loyalty Transaction Pivot View -->
+    <record id="loyalty_transaction_view_pivot" model="ir.ui.view">
+        <field name="name">loyalty.transaction.pivot</field>
+        <field name="model">loyalty.transaction</field>
+        <field name="arch" type="xml">
+            <pivot string="Loyalty Transactions">
+                <field name="date" interval="month" type="row"/>
+                <field name="transaction_type" type="col"/>
+                <field name="points" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Loyalty Transaction Action -->
+    <record id="loyalty_transaction_action" model="ir.actions.act_window">
+        <field name="name">Loyalty Transactions</field>
+        <field name="res_model">loyalty.transaction</field>
+        <field name="view_mode">tree,graph,pivot,form</field>
+        <field name="search_view_id" ref="loyalty_transaction_view_search"/>
+        <field name="context">{'search_default_this_month': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No loyalty transactions yet
+            </p>
+            <p>
+                Transactions are created automatically when customers earn or redeem points in POS.
+            </p>
+        </field>
+    </record>
+
+</odoo>

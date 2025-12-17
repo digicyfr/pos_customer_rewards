@@ -1,0 +1,130 @@
+/* Loyalty Points Badge in Partner List */
+.loyalty-points-badge {
+    display: inline-block;
+    margin-left: 8px;
+}
+
+.loyalty-points-badge .badge {
+    padding: 4px 8px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.loyalty-points-badge .fa {
+    margin-right: 4px;
+}
+
+/* Use Points Button on Payment Screen */
+.loyalty-button {
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+.loyalty-button .fa {
+    margin-right: 8px;
+}
+
+/* Loyalty Popup Styles */
+.loyalty-popup .modal-body {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.loyalty-info {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+}
+
+.loyalty-info .badge-lg {
+    font-size: 18px;
+    padding: 8px 15px;
+}
+
+.rewards-list h5 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* Reward Item */
+.reward-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.reward-item:hover {
+    background-color: #f8f9fa;
+    border-color: #007bff;
+}
+
+.reward-item.selected {
+    background-color: #e7f3ff;
+    border-color: #007bff;
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.2);
+}
+
+.reward-info {
+    flex: 1;
+}
+
+.reward-name {
+    margin: 0 0 8px 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.reward-details {
+    display: flex;
+    gap: 15px;
+}
+
+.reward-details span {
+    font-size: 14px;
+    color: #666;
+}
+
+.reward-details .fa {
+    margin-right: 5px;
+}
+
+.reward-points {
+    color: #ffc107;
+}
+
+.reward-discount {
+    color: #28a745;
+}
+
+.reward-select {
+    font-size: 24px;
+    margin-left: 15px;
+}
+
+.reward-select .fa-check-circle {
+    color: #28a745;
+}
+
+.reward-select .fa-circle-o {
+    color: #dee2e6;
+}
+
+/* Popup Footer */
+.loyalty-popup .modal-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+}
+
+.loyalty-popup .modal-footer button {
+    min-width: 100px;
+}

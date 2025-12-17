@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Extend Partner Form View with Loyalty Points -->
+    <record id="res_partner_view_form_loyalty" model="ir.ui.view">
+        <field name="name">res.partner.form.loyalty</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_loyalty_transactions"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-star"
+                        invisible="not loyalty_points">
+                    <field name="loyalty_points" widget="statinfo" string="Points"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Extend Partner Tree View with Loyalty Points Column -->
+    <record id="res_partner_view_tree_loyalty" model="ir.ui.view">
+        <field name="name">res.partner.tree.loyalty</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='email']" position="after">
+                <field name="loyalty_points" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Extend Partner Search View with Loyalty Filters -->
+    <record id="res_partner_view_search_loyalty" model="ir.ui.view">
+        <field name="name">res.partner.search.loyalty</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='customer']" position="after">
+                <separator/>
+                <filter string="Has Loyalty Points" name="has_points" domain="[('loyalty_points', '>', 0)]"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

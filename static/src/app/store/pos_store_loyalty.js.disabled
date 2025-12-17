@@ -1,0 +1,68 @@
+/** @odoo-module */
+
+import { PosStore } from "@point_of_sale/app/store/pos_store";
+import { patch } from "@web/core/utils/patch";
+
+/**
+ * Patch PosStore to make loyalty data accessible
+ */
+patch(PosStore.prototype, {
+    /**
+     * Override to set loyalty data on pos object after data is processed
+     */
+    async setup() {
+        await super.setup(...arguments);
+
+        // Log what data we have
+        console.log('[Loyalty] PosStore setup - checking data...');
+        console.log('[Loyalty] this.data keys:', this.data ? Object.keys(this.data) : 'no data');
+        console.log('[Loyalty] Looking for loyalty data...');
+
+        // Try to find loyalty data in various possible locations
+        if (this.data) {
+            console.log('[Loyalty] this.data["loyalty.program"]:', this.data["loyalty.program"]);
+            console.log('[Loyalty] this.data["loyalty_program"]:', this.data["loyalty_program"]);
+            console.log('[Loyalty] this.data["loyalty.reward"]:', this.data["loyalty.reward"]);
+            console.log('[Loyalty] this.data["loyalty_rewards"]:', this.data["loyalty_rewards"]);
+
+            // Set loyalty_program from loaded data
+            if (this.data["loyalty.program"] && this.data["loyalty.program"].length > 0) {
+                this.loyalty_program = this.data["loyalty.program"][0];
+                console.log('[Loyalty] ✓ Set loyalty_program from loyalty.program:', this.loyalty_program);
+            } else if (this.data["loyalty_program"]) {
+                this.loyalty_program = this.data["loyalty_program"];
+                console.log('[Loyalty] ✓ Set loyalty_program from loyalty_program:', this.loyalty_program);
+            } else {
+                this.loyalty_program = null;
+                console.log('[Loyalty] ✗ No loyalty program found');
+            }
+
+            // Set loyalty_rewards from loaded data
+            if (this.data["loyalty.reward"]) {
+                this.loyalty_rewards = this.data["loyalty.reward"];
+                console.log('[Loyalty] ✓ Set loyalty_rewards from loyalty.reward:', this.loyalty_rewards.length, 'rewards');
+            } else if (this.data["loyalty_rewards"]) {
+                this.loyalty_rewards = this.data["loyalty_rewards"];
+                console.log('[Loyalty] ✓ Set loyalty_rewards from loyalty_rewards:', this.loyalty_rewards.length, 'rewards');
+            } else {
+                this.loyalty_rewards = [];
+                console.log('[Loyalty] ✗ No loyalty rewards found');
+            }
+
+            // Set discount product ID
+            this.loyalty_discount_product_id = this.data["loyalty_discount_product_id"] || null;
+            console.log('[Loyalty] loyalty_discount_product_id:', this.loyalty_discount_product_id);
+        } else {
+            console.log('[Loyalty] ✗ No data object available');
+            this.loyalty_program = null;
+            this.loyalty_rewards = [];
+            this.loyalty_discount_product_id = null;
+        }
+
+        console.log('[Loyalty] Final state:', {
+            loyalty_program: this.loyalty_program,
+            loyalty_rewards: this.loyalty_rewards ? this.loyalty_rewards.length : 0,
+            loyalty_discount_product_id: this.loyalty_discount_product_id
+        });
+    },
+});

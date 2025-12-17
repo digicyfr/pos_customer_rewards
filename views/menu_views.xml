@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Loyalty Root Menu under POS Configuration -->
+    <menuitem id="menu_pos_loyalty_root"
+              name="Loyalty"
+              parent="point_of_sale.menu_point_config_product"
+              sequence="30"/>
+
+    <!-- Loyalty Programs Menu -->
+    <menuitem id="menu_loyalty_program"
+              name="Loyalty Programs"
+              parent="menu_pos_loyalty_root"
+              action="loyalty_program_action"
+              sequence="10"/>
+
+    <!-- Loyalty Rewards Menu -->
+    <menuitem id="menu_loyalty_reward"
+              name="Rewards"
+              parent="menu_pos_loyalty_root"
+              action="loyalty_reward_action"
+              sequence="20"/>
+
+    <!-- Loyalty Transactions Menu -->
+    <menuitem id="menu_loyalty_transaction"
+              name="Transactions"
+              parent="menu_pos_loyalty_root"
+              action="loyalty_transaction_action"
+              sequence="30"/>
+
+</odoo>
