@@ -46,6 +46,7 @@ Support
     """,
     'author': 'Digicyfr Polska',
     'website': 'https://digicyfr.com',
+    'support': 'info@digicyfr.com',
     'license': 'LGPL-3',
     'depends': [
         'point_of_sale',
